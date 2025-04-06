@@ -22,4 +22,10 @@ class ClientSearch
 
   clients.select{ |client| email_counts[client["email"]] > 1  }
  end
+
+ def add_client(client)
+  clients << client
+  File.write('clients.json', JSON.pretty_generate(clients))
+  client
+ end
 end
