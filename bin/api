@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require "sinatra"
+require "json"
+require "pry"
+require_relative "../lib/client/search_by"
+require_relative "../lib/client/search_duplicates"
+
+get "/" do
+  "Welcome to the ShiftCare API"
+end
+
+get "/search-by" do
+  search_key   = params["search_key"]
+  search_value = params["search_value"]
+  search_mode  = params["search_mode"] || "like"
+  
+  search_by_service = Client::SearchBy.new(params: {
+                       search_key: search_key,
+                       search_value: search_value,
+                       search_mode: search_mode
+                      }).call
+  
+  content_type :json
+
+  if search_by_service.success?
+    search_by_service.result.to_json
+  else
+    search_by_service.errors.to_json
+  end
+end
+
+get "/search-dup" do
+  search_key = params["search_key"]
+  
+  search_dup_service = Client::SearchDuplicates.new(params: { search_key: search_key }).call
+  
+  content_type :json
+
+  if search_dup_service.success?
+    search_dup_service.result.to_json
+  else
+    search_dup_service.errors.to_json
+  end
+end

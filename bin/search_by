@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require_relative "../lib/client/search_by"
+
+RED   = "\e[31m"
+CYAN  = "\e[36m"
+RESET = "\e[0m"
+
+if ARGV.length < 1
+ puts "#{CYAN}Usage: ./bin/search_by <search_key> <search_value> <search_mode>#{RESET}"
+ puts "#{CYAN}sample: ./bin/search_by full_name John equal#{RESET}"
+ puts "#{CYAN}Note: search_key and search_value are required; search_mode is optional; default to 'like'#{RESET}"
+ puts "#{CYAN}Search Mode: 'like' and 'equal'"
+end
+
+search_key   = ARGV[0]
+search_value = ARGV[1]
+search_mode  = ARGV[2] || 'like'
+
+if search_key.nil? || search_value.nil?
+ puts "#{RED}Error: Search key and Search value are required.#{RESET}"
+ exit
+end
+
+search_by_service = Client::SearchBy.new( params: {
+                     search_key: search_key,
+                     search_value: search_value,
+                     search_mode: search_mode
+                    }).call
+
+if search_by_service.success?
+ puts "#{CYAN}"
+ puts search_by_service.result[:message]
+ puts search_by_service.result[:clients]
+ puts "#{RESET}"
+else
+ puts "#{RED}#{search_by_service.errors}#{RESET}"
+end
