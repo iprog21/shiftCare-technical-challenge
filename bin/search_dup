@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require_relative "../lib/client/search_duplicates"
+
+RED   = "\e[31m"
+CYAN  = "\e[36m"
+RESET = "\e[0m"
+
+if ARGV.length < 1
+ puts "#{CYAN}Usage: ./bin/search_dup <search_key>#{RESET}"
+ puts "#{CYAN}sample: ./bin/search_dup full_name#{RESET}"
+ puts "#{CYAN}Note: search_key is required#{RESET}"
+end
+
+search_key = ARGV[0]
+
+if search_key.nil?
+ puts "#{RED}Error: Search key is required.#{RESET}"
+ exit
+end
+
+search_dup_service = Client::SearchDuplicates.new(params: { search_key: search_key }).call
+
+if search_dup_service.success?
+ puts "#{CYAN}"
+ puts search_dup_service.result[:message]
+ puts search_dup_service.result[:clients]
+ puts "#{RESET}"
+else
+ puts "#{RED}#{search_dup_service.errors}#{RESET}"
+end

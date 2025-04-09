@@ -4,9 +4,9 @@
 This is a minimalist Ruby command-line application for performing searches and finding duplicate emails from a JSON dataset of clients.
 
 ## Features
-- Search for clients by partial name matches.
-- Identify clients with duplicate emails.
-- Easily extensible for additional functionalities.
+- Search clients by search key and search value.
+- Identify clients with duplicate emails, full name and id.
+- CLI and API support.
 
 ## Requirements
 - Ruby (>= 2.7.0)
@@ -24,24 +24,31 @@ This is a minimalist Ruby command-line application for performing searches and f
 
 ## Usage
 
-### Making the File Executable
-Ensure the script is executable by running:
-```sh
-chmod +x clients_app.rb
-```
-
 ### Search by Name
 ```sh
-./clients_app.rb search <query>
+./bin/search_by <search_key> <search_value> <search_mode>
 ```
 Example:
 ```sh
-./clients_app.rb search John
+./bin/search_by full_name John
+```
+```sh
+./bin/search_by id 34 equal
 ```
 
-### Find Duplicate Emails
+### Search Duplicates
 ```sh
-./clients_app.rb duplicates
+./bin/search_dup <search_key>
+```
+Example:
+```sh
+./bin/search_dup full_name
+```
+```sh
+./bin/search_dup email
+```
+```sh
+./bin/search_dup id
 ```
 
 ## Test
@@ -50,33 +57,26 @@ RSpec is used for testing.
 bundle exec rspec
 ```
 
-## File Structure
-```plaintext
-.
-├── Gemfile
-├── Gemfile.lock
-├── README.md
-├── LICENSE
-├── ShiftCare Technical Challenge.pdf
-├── output.png
-├── clients.json
-├── clients_app.rb
-├── clients_search.rb
-├── spec
-│   ├── client_search_spec.rb
-```
-
 ## Technical Challenge Document File
-You can download the original ShiftCare Technical Challenge PDF here: [ShiftCare Technical Challenge](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/ShiftCare%20Technical%20Challenge.pdf)
+You can download the original ShiftCare Technical Challenge PDF here: 
+- [ShiftCare Technical Challenge](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/shiftcare-technical-challenge.pdf)
+- [ShiftCare Technical Challenge Round 2](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/technical-challenge-shiftcare-round2.pdf)
 
-## Program Output
-[Output](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/output.png)
+## Program Output Screenshots
+- [Search By(CLI)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/search_by.png)
+- [Search Dup(CLI)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/search_dup.png)
+- [Search By Full Name(API)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/api_search_by_full_name.png)
+- [Search By Email(API)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/api_search_by_email_search_mode_equal.png)
+- [Search By ID(API)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/api_search_by_id_search_mode_equal.png)
+- [Search Duplicates by Email(API)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/api_search_duplicates_by_email.png)
+- [Search Duplicates by Full Name(API)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/api_search_duplicates_by_full_name.png)
+- [Search Duplicates by ID(API)](https://github.com/iprog21/shiftCare-technical-challenge/blob/main/screenshots/api_search_duplicates_by_id.png)
+
+## Source Code Demo
+- [Demo](https://drive.google.com/file/d/1Dms9krjjxvQAEGydehhaIKIXXSbFRAeV/view?usp=sharing)
 
 ## Future Improvements
-- Accept any JSON file as input.
-- Allow searching by any field (e.g., email, id).
 - Implement a REST API.
 
 ## License
 This project is open-source and available under the [MIT License](LICENSE).
-
